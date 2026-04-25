@@ -38,3 +38,22 @@ To rebuild the `.exe` later, run:
 The app starts with `C:\Business` as the default search location.
 
 If your actual business folder is somewhere else, click `Browse...` and pick the correct folder.
+
+## Website refresh
+
+This repo also now includes a lightweight static website refresh for Ikshana Technology:
+
+- `index.html`
+- `styles.css`
+- `script.js`
+
+## GitHub Pages
+
+This repository includes a GitHub Pages workflow at `.github/workflows/deploy-pages.yml`.
+
+After pushing this repository to GitHub:
+
+1. Open the repository on GitHub
+2. Go to `Settings > Pages`
+3. Set the source to `GitHub Actions`
+4. Push to `main` to deploy the site automatically
