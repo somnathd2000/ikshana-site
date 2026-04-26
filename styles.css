@@ -59,30 +59,34 @@ a {
   padding: 18px 22px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 250, 243, 0.7);
+  background: rgba(255, 250, 243, 0.78);
   position: sticky;
   top: 16px;
   z-index: 10;
+  box-shadow: 0 10px 30px rgba(23, 32, 38, 0.05);
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 14px;
+  min-width: 0;
 }
 
 .brand-mark {
-  width: 76px;
-  height: 76px;
-  flex: 0 0 76px;
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(250, 243, 232, 0.92));
-  border: 1px solid rgba(23, 32, 38, 0.08);
-  box-shadow: 0 12px 28px rgba(23, 32, 38, 0.08);
+  padding: 2px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 48%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(250, 243, 232, 0.78));
+  border: 1px solid rgba(23, 32, 38, 0.06);
+  box-shadow: 0 10px 24px rgba(23, 32, 38, 0.06);
 }
 
 .brand-mark img {
@@ -90,12 +94,14 @@ a {
   height: 100%;
   object-fit: contain;
   display: block;
+  filter: saturate(0.95) contrast(1.02);
 }
 
 .brand-name {
   display: block;
   font-weight: 800;
   letter-spacing: -0.02em;
+  font-size: 1.15rem;
 }
 
 .brand-tag {
@@ -142,6 +148,32 @@ a {
     linear-gradient(180deg, rgba(15, 118, 110, 0.08), transparent);
   border: 1px solid rgba(23, 32, 38, 0.08);
   box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: auto -120px -120px auto;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(15, 118, 110, 0.15), rgba(15, 118, 110, 0.03) 48%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -130px;
+  right: 180px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 130, 74, 0.15);
+  pointer-events: none;
 }
 
 .eyebrow {
@@ -224,6 +256,18 @@ a {
   border-radius: 26px;
   background: linear-gradient(180deg, #143b41 0%, #0d252b 100%);
   color: white;
+  position: relative;
+  transform: translateY(34px);
+}
+
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 32%);
+  pointer-events: none;
 }
 
 .stat-label {
@@ -277,15 +321,34 @@ a {
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin: 20px 0 0;
-  padding: 18px 22px;
+  padding: 16px 18px;
   border-radius: 22px;
-  background: rgba(255, 250, 243, 0.78);
+  background: linear-gradient(135deg, rgba(255, 247, 238, 0.86), rgba(242, 247, 244, 0.82));
 }
 
 .trust-strip p {
   margin: 0;
-  font-weight: 700;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(23, 32, 38, 0.06);
+}
+
+.trust-strip span {
+  display: block;
+  margin-bottom: 6px;
   color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.trust-strip strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.35;
 }
 
 .section {
@@ -294,6 +357,37 @@ a {
   border-radius: var(--radius-lg);
   background: rgba(255, 250, 243, 0.7);
   border: 1px solid rgba(23, 32, 38, 0.08);
+}
+
+.section-services {
+  background:
+    linear-gradient(180deg, rgba(255, 250, 243, 0.78), rgba(255, 248, 241, 0.7));
+}
+
+.section-about {
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(255, 250, 243, 0.9), rgba(246, 242, 236, 0.76));
+  overflow: hidden;
+}
+
+.section-about::before {
+  content: "";
+  position: absolute;
+  right: -58px;
+  top: 50%;
+  width: 240px;
+  height: 240px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  border: 1px solid rgba(217, 130, 74, 0.14);
+  box-shadow: inset 0 0 0 22px rgba(15, 118, 110, 0.03);
+  pointer-events: none;
+}
+
+.section-process {
+  background:
+    linear-gradient(180deg, rgba(245, 249, 247, 0.86), rgba(255, 250, 243, 0.72));
 }
 
 .section-heading {
@@ -326,6 +420,28 @@ a {
   background: rgba(255, 255, 255, 0.58);
 }
 
+.section-services .card,
+.section-process .card,
+.contact-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.52));
+}
+
+.section-services .card {
+  position: relative;
+  padding-top: 28px;
+}
+
+.section-services .card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  width: 56px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--warm), var(--accent));
+}
+
 .card h3 {
   margin: 0 0 12px;
   font-size: 1.22rem;
@@ -340,6 +456,15 @@ a {
   grid-template-columns: 0.9fr 1.1fr;
   gap: 28px;
   align-items: start;
+}
+
+.split-copy {
+  position: relative;
+  z-index: 1;
+  padding: 26px 28px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(23, 32, 38, 0.05);
 }
 
 .split-copy p:first-child {
@@ -363,11 +488,42 @@ a {
   margin-bottom: 16px;
 }
 
+.process-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.process-card::after {
+  content: "";
+  position: absolute;
+  right: -16px;
+  bottom: -24px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 1px solid rgba(15, 118, 110, 0.08);
+}
+
 .highlight {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 28px;
-  background: linear-gradient(135deg, #fff5ec, #f3f4ec);
+  background: linear-gradient(135deg, #123a40, #0d252b 62%, #173f45);
+  color: white;
+}
+
+.highlight .eyebrow,
+.highlight h2,
+.highlight li {
+  color: white;
+}
+
+.highlight .eyebrow {
+  opacity: 0.72;
+}
+
+.highlight .benefit-list li {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .benefit-list {
@@ -423,6 +579,10 @@ a {
     border-radius: 20px;
   }
 
+  .hero-card {
+    transform: none;
+  }
+
   .menu-toggle {
     display: inline-flex;
   }
@@ -444,6 +604,10 @@ a {
 
   .site-footer {
     flex-direction: column;
+  }
+
+  .split-copy {
+    padding: 22px;
   }
 }
 
