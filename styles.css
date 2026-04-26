@@ -564,6 +564,7 @@ a {
 .benefit-list {
   margin: 0;
   padding-left: 22px;
+  padding-top: 64px;
 }
 
 .benefit-list li + li {
@@ -670,6 +671,10 @@ a {
 
   .split-copy {
     padding: 22px;
+  }
+
+  .benefit-list {
+    padding-top: 0;
   }
 }
 
