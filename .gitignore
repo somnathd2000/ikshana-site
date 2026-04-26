@@ -4,6 +4,7 @@ __pycache__/
 
 build/
 dist/
+.wrangler/
 
 .DS_Store
 Thumbs.db
