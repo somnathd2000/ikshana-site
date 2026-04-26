@@ -543,28 +543,35 @@ a {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 28px;
-  background: linear-gradient(135deg, #123a40, #0d252b 62%, #173f45);
-  color: white;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 243, 0.86), rgba(247, 241, 233, 0.74));
+  color: var(--text);
 }
 
 .highlight .eyebrow,
 .highlight h2,
 .highlight li {
-  color: white;
+  color: var(--text);
 }
 
 .highlight .eyebrow {
-  opacity: 0.72;
+  color: var(--accent-strong);
+  opacity: 1;
 }
 
 .highlight .benefit-list li {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--muted);
 }
 
 .benefit-list {
   margin: 0;
   padding-left: 22px;
   padding-top: 64px;
+  padding-right: 18px;
+  padding-bottom: 18px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.5));
+  border: 1px solid rgba(23, 32, 38, 0.06);
 }
 
 .benefit-list li + li {
