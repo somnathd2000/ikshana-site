@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Signal Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Personal portfolio lab</p>
+          <h1>Portfolio Signal Analyzer</h1>
+        </div>
+        <div class="actions">
+          <button id="connectFidelity" type="button" class="connect-button">Connect Fidelity</button>
+          <button id="loadSample" type="button">Load Sample</button>
+          <label class="file-button secondary-file-button">
+            CSV Backup
+            <input id="csvInput" type="file" accept=".csv,text/csv" />
+          </label>
+        </div>
+      </header>
+
+      <section class="connect-panel">
+        <div>
+          <p class="panel-label">Brokerage connection</p>
+          <h2>Log into Fidelity through a secure consent portal</h2>
+          <p>
+            Your Fidelity credentials should be entered only on Fidelity/SnapTrade screens. This app asks
+            a backend for a short-lived connection portal URL, then imports holdings after consent.
+          </p>
+        </div>
+        <div class="connect-status" id="connectionStatus">Setup needed</div>
+      </section>
+
+      <section class="notice" id="connectionMessage">
+        <strong>Setup needed:</strong>
+        add your SnapTrade API credentials locally, then Connect Fidelity will open the secure consent portal.
+      </section>
+
+      <section class="panel setup-panel" id="setupPanel" hidden>
+        <div class="panel-heading">
+          <h2>SnapTrade Setup</h2>
+          <div class="setup-actions">
+            <button id="openCredentials" type="button">Enter Credentials</button>
+            <button id="checkSetup" type="button" class="ghost-button">Check Setup</button>
+          </div>
+        </div>
+        <div class="setup-grid">
+          <article>
+            <strong>1. Create local secrets file</strong>
+            <p>Create <code>portfolio-analyzer/.env</code> from <code>.env.example</code> and fill in your SnapTrade values.</p>
+          </article>
+          <article>
+            <strong>2. Restart local server</strong>
+            <p>Stop and restart <code>node server.js</code>, then return to this page.</p>
+          </article>
+          <article>
+            <strong>3. Connect Fidelity</strong>
+            <p>Click Connect Fidelity. You will enter Fidelity credentials only in the external consent portal.</p>
+          </article>
+        </div>
+      </section>
+
+      <dialog class="credential-dialog" id="credentialDialog">
+        <form id="credentialForm" method="dialog">
+          <div class="dialog-heading">
+            <div>
+              <p class="panel-label">Local setup</p>
+              <h2>SnapTrade Credentials</h2>
+            </div>
+            <button id="closeCredentials" type="button" class="dialog-close" aria-label="Close">x</button>
+          </div>
+          <p class="dialog-copy">
+            These values are saved only to your local <code>.env</code> file. Do not enter your
+            Fidelity username or password here.
+          </p>
+          <label>
+            Client ID
+            <input id="snaptradeClientId" name="SNAPTRADE_CLIENT_ID" autocomplete="off" required />
+          </label>
+          <label>
+            Consumer Key
+            <input id="snaptradeConsumerKey" name="SNAPTRADE_CONSUMER_KEY" autocomplete="off" required />
+          </label>
+          <label>
+            User ID
+            <input id="snaptradeUserId" name="SNAPTRADE_USER_ID" autocomplete="off" required />
+          </label>
+          <label>
+            User Secret
+            <input id="snaptradeUserSecret" name="SNAPTRADE_USER_SECRET" type="password" autocomplete="off" required />
+          </label>
+          <div class="dialog-actions">
+            <button id="saveCredentials" type="submit">Save Locally</button>
+            <button id="cancelCredentials" type="button" class="ghost-button">Cancel</button>
+          </div>
+        </form>
+      </dialog>
+
+      <section class="dashboard-grid">
+        <article class="panel score-panel">
+          <p class="panel-label">Portfolio score</p>
+          <div class="score-row">
+            <strong id="portfolioScore">--</strong>
+            <span id="portfolioTone">Add holdings to begin</span>
+          </div>
+          <div class="meter" aria-hidden="true"><span id="scoreMeter"></span></div>
+        </article>
+        <article class="panel">
+          <p class="panel-label">Market value</p>
+          <strong id="totalValue">$0</strong>
+          <span id="cashNote">Excludes cash unless imported</span>
+        </article>
+        <article class="panel">
+          <p class="panel-label">Signals</p>
+          <strong id="signalMix">0 buy / 0 hold / 0 sell</strong>
+          <span id="riskNote">No concentration risk detected</span>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel controls-panel">
+          <div class="panel-heading">
+            <h2>Signal Settings</h2>
+            <button id="resetSettings" type="button" class="ghost-button">Reset</button>
+          </div>
+
+          <label>
+            Max single position
+            <input id="maxPosition" type="number" min="1" max="100" step="1" value="15" />
+          </label>
+          <label>
+            Target annual return
+            <input id="targetReturn" type="number" min="0" max="100" step="1" value="8" />
+          </label>
+          <label>
+            Max volatility
+            <input id="maxVolatility" type="number" min="1" max="100" step="1" value="28" />
+          </label>
+          <label>
+            Dividend weight
+            <input id="dividendWeight" type="range" min="0" max="2" step="0.1" value="0.7" />
+          </label>
+
+          <div class="import-help">
+            <h3>CSV columns</h3>
+            <p>Optional backup only. The preferred flow is Fidelity login through the consent portal.</p>
+          </div>
+        </aside>
+
+        <section class="panel holdings-panel">
+          <div class="panel-heading">
+            <h2>Holdings</h2>
+            <button id="addRow" type="button">Add Holding</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Shares</th>
+                  <th>Price</th>
+                  <th>Target %</th>
+                  <th>Return %</th>
+                  <th>Vol %</th>
+                  <th>Div %</th>
+                  <th>Momentum</th>
+                  <th>Signal</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="holdingsBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel insight-panel">
+        <div class="panel-heading">
+          <h2>Insights</h2>
+          <button id="exportJson" type="button" class="ghost-button">Export JSON</button>
+        </div>
+        <div id="insights" class="insights"></div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
