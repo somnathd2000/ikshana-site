@@ -387,6 +387,7 @@ a {
 }
 
 .section {
+  scroll-margin-top: 120px;
   margin-top: 20px;
   padding: 34px;
   border-radius: var(--radius-lg);
